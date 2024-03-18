@@ -14,23 +14,41 @@ na palavra secreta.
 Faça a contagem de tentativas do seu
 usuário.
 """
+import os
+
 print('Jogo da Palavra secreta.')
 
 word = 'jogo'
-n = 0
-letra = word[n]
-ast = '*'* len(word)
+letras_acertadas = ''
+num_tentativas = 0
 
 while True:
-    enter = input('Digite a letra: ')
+    letra_digitada = input('Digite a letra: ')
+    num_tentativas += 1
     
-    if len(enter) > 1:
-        print('Digite somente uma letra.')
-        continue
+    if len(letra_digitada) > 1:
+         print('Digite somente uma letra.')
+         continue
     
+    if letra_digitada in word:
+        letras_acertadas += letra_digitada
+    
+    palavra_formada = ''
+    for letra_secreta in word:
+        if letra_secreta in letras_acertadas:
+            palavra_formada += letra_secreta
+        else:
+            palavra_formada += '*'
+    print(f'Palavra formada: {palavra_formada}')
+    
+    if palavra_formada == word:
+        os.system("cls")
+        print('Você acertou!')
+        print(f'A palavra era: {word}')
+        print(f'Tentativas: {num_tentativas}')
+        letras_acertadas = ''
+        num_tentativas = 0
         
-    sair = input('Quer sair? [s]im\n').lower().startswith('s')
-    if sair is True:
-        print(f'A palavra secreta era {word}.')
-        break
-        
+        sair = input('Quer sair? [s]im\n').lower().startswith('s')
+        if sair is True:
+         break
